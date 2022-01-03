@@ -1,8 +1,33 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { usePost } from "../hooks/posts";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { getPostById } from "../api/posts";
 
 export default function Post({ postId }) {
-  const { data: post, error, isLoading } = usePost(postId);
+  const {
+    data: post,
+    error,
+    isLoading,
+  } = useQuery(["posts", postId], () => getPostById(post));
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [post, setPost] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const data = await getPostById(postId);
+  //       setPost(data);
+  //       setError(null);
+  //     } catch (error) {
+  //       setError(error);
+  //       setPost(null);
+  //     }
+  //     setIsLoading(false);
+  //   };
+  //   fetchData();
+  // }, [postId]);
 
   if (isLoading) {
     return (

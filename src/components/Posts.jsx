@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useQueryClient } from "react-query";
-import { usePosts } from "../hooks/posts";
+import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "react-query";
+import { getPosts } from "../api/posts";
 
 export default function Posts({ setPostId }) {
   const queryClient = useQueryClient();
@@ -9,9 +10,28 @@ export default function Posts({ setPostId }) {
     error,
     isLoading,
     isFetching,
-    // isIdle,
-    // refetch,
-  } = usePosts();
+    isIdle,
+    refetch,
+  } = useQuery(["posts"], getPosts, {});
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
+  // const [posts, setPosts] = useState(null);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const data = await getPosts();
+  //       setPosts(data);
+  //       setError(null);
+  //     } catch (error) {
+  //       setError(error);
+  //       setPosts(null);
+  //     }
+  //     setIsLoading(false);
+  //   };
+  //   fetchData();
+  // }, []);
 
   // if (isIdle) {
   //   return <button onClick={refetch}>Fetch Posts</button>;
