@@ -6,11 +6,14 @@ import { getPosts } from "../api/posts";
 export default function Posts({ setPostId }) {
  
  //Queries
- const {data: posts,error, isLoading, isFetching} = useQuery('posts',getPosts,{
-   refetchOnWindowFocus:false //this property refresh the data example if we move for other tabs and return react-query refresh our data.
-   // exist other properties to handle this kind of situation.
+ const {data: posts,error, isLoading, isFetching, isIdle, refetch} = useQuery('posts',getPosts,{
+   refetchOnWindowFocus:false, //this property refresh the data example if we move for other tabs and return react-query refresh our data.
+   //staleTime: <time>|infinity// exist other properties to handle this kind of situation.
+   enabled:false, //this property is for no load the data automatically
+
  });
 
+  if(isIdle) return <button onClick={refetch}>Fetch Posts</button>
   if (isLoading) {
     return (
       <div>
