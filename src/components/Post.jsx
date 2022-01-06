@@ -5,7 +5,7 @@ import { getPostById } from "../api/posts";
 
 export default function Post({ postId }) {
  
-  const {data:post, isLoading, error} = useQuery(['post',postId],()=>getPostById(postId));
+  const {data:post, isLoading, error} = useQuery(['posts',postId],()=>getPostById(postId));
 
   if (isLoading) {
     return (

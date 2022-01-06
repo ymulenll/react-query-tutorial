@@ -5,15 +5,16 @@ import { getPosts } from "../api/posts";
 
 export default function Posts({ setPostId }) {
  
+  const qc =  useQueryClient()
  //Queries
- const {data: posts,error, isLoading, isFetching, isIdle, refetch} = useQuery('posts',getPosts,{
-   refetchOnWindowFocus:false, //this property refresh the data example if we move for other tabs and return react-query refresh our data.
+ const {data: posts,error, isLoading, isFetching/*, isIdle, refetch*/} = useQuery('posts',getPosts,{
+   //refetchOnWindowFocus:false, //this property refresh the data example if we move for other tabs and return react-query refresh our data.
    //staleTime: <time>|infinity// exist other properties to handle this kind of situation.
-   enabled:false, //this property is for no load the data automatically
+   //enabled:false, //this property is for no load the data automatically
 
  });
 
-  if(isIdle) return <button onClick={refetch}>Fetch Posts</button>
+  // if(isIdle) return <button onClick={refetch}>Fetch Posts</button>
   if (isLoading) {
     return (
       <div>
@@ -36,7 +37,7 @@ export default function Posts({ setPostId }) {
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
-            <a onClick={() => setPostId(post.id)} href="#">
+            <a className={qc.getQueryData(['posts',post.id]) && 'link-success'} onClick={() => setPostId(post.id)} href="#">
               {post.title}
             </a>
           </li>
