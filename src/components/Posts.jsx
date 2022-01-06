@@ -6,7 +6,10 @@ import { getPosts } from "../api/posts";
 export default function Posts({ setPostId }) {
  
  //Queries
- const {data: posts,error, isLoading} = useQuery('posts',getPosts);
+ const {data: posts,error, isLoading, isFetching} = useQuery('posts',getPosts,{
+   refetchOnWindowFocus:false //this property refresh the data example if we move for other tabs and return react-query refresh our data.
+   // exist other properties to handle this kind of situation.
+ });
 
   if (isLoading) {
     return (
@@ -26,7 +29,7 @@ export default function Posts({ setPostId }) {
 
   return (
     <section>
-      <h2>Posts:</h2>
+      <h2>Posts:{isFetching && <span className="spinner-border"></span>}</h2>
       <ul>
         {posts.map((post) => (
           <li key={post.id}>
