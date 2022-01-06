@@ -4,9 +4,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { getPosts } from "../api/posts";
 
 export default function Posts({ setPostId }) {
- //access the client
- const queryClient = useQueryClient();
-
+ 
  //Queries
  const {data: posts,error, isLoading} = useQuery('posts',getPosts);
 
