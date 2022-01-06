@@ -1,27 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from 'react-query';
 import { getPosts } from "../api/posts";
 
 export default function Posts({ setPostId }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [posts, setPosts] = useState(null);
+ //access the client
+ const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getPosts();
-        setPosts(data);
-        setError(null);
-      } catch (error) {
-        setError(error);
-        setPosts(null);
-      }
-      setIsLoading(false);
-    };
-    fetchData();
-  }, []);
+ //Queries
+ const {data: posts,error, isLoading} = useQuery('posts',getPosts);
 
   if (isLoading) {
     return (
